@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import hookActions from './actions/hookActions';
+import Input from "./input";
 
 /**
  * Reducer to update state, called automatically by dispatch
@@ -31,8 +32,31 @@ function App() {
     hookActions.getSecretWord(setSecretWord)
   }, []);
 
+  if(!state.secretWord) {
+    return (
+      <div
+        data-test="spinner"
+        className="container"
+      >
+        <div
+          className="spinner-border"
+          role="status"
+        >
+          <span className="sr-only">Loading...</span>
+        </div>
+        <p>
+          Loading secret word
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div data-test="component-app">
+    <div
+      data-test="component-app"
+      className="container"
+    >
+      <Input secretWord={state.secretWord} />
     </div>
   );
 }
